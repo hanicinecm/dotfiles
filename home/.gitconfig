@@ -5,3 +5,5 @@
     lg = log --oneline --graph
     lga = log --oneline --graph --all
     lgs = log --oneline --graph --all --simplify-by-decoration
+[init]
+	defaultBranch = main
