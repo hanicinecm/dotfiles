@@ -1,0 +1,4 @@
+%load_ext autoreload
+%autoreload 2
+
+print("Auto-reload set to 2.")

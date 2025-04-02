@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version: 3
+palette:
+  red: "#e06c75"
+  green: "#98c379"
+  yellow: "#e5c07b"
+  blue: "#61afef"
+  magenta: "#c678dd"
+  cyan: "#56b6c2"
+  gray: "#7f848e"
+
+blocks:
+
+  - type: prompt
+    alignment: left
+    segments:
+      - type: session
+        foreground: p:cyan
+        template: "{{ .UserName }}@{{ .HostName }}"
+      - type: python
+        foreground: p:yellow
+        properties:
+          home_enabled: true
+        template: " ({{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Major }}.{{ .Minor }}{{ end }})"
+      - type: git
+        style: plain
+        foreground: p:green
+        foreground_templates:
+          - "{{ if or (.Working.Changed) (.Staging.Changed) (gt .StashCount 0) }}p:red{{ end }}"
+          - "{{ if or (gt .Ahead 0) (gt .Behind 0) }}p:magenta{{ end }}"
+        properties:
+          fetch_status: true
+          fetch_stash_count: true
+          fetch_worktree_count: true
+          branch_icon: ""
+        template: " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}"
+
+  - type: prompt
+    alignment: right
+    segments:
+      - type: status
+        foreground: p:red
+        template: "{{ if gt .Code 0 }}({{.Code}}) {{ end }}"
+      - type: shell
+        foreground: p:blue
+        template: "<default>in</> {{ .Name }}"
+
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: path
+        foreground: p:blue
+        foreground_templates:
+          - "{{ if not .Writable }}p:gray{{ end }}"
+        template: "{{ .Path }} "
+        properties:
+          style: powerlevel
+          max_width: 88  # if the path is longer, the parent names will get shortened
+      - type: text
+        foreground: p:green
+        foreground_templates:
+          - "{{ if gt .Code 0 }}p:red{{ end }}"
+        template: "> "

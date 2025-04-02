@@ -1,0 +1,7 @@
+[user]
+    email = hanicinecm@gmail.com
+    name = Martin Hanicinec
+[alias]
+    lg = log --oneline --graph
+    lga = log --oneline --graph --all
+    lgs = log --oneline --graph --all --simplify-by-decoration
