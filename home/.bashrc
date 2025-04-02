@@ -18,6 +18,5 @@ fi
 
 # Aliases
 alias ls="ls -CF --color=auto"
-alias la="ls -A"
 alias ll="ls -l"
-alias lla="ls -lA"
+alias l="ls -lA"
