@@ -21,3 +21,4 @@ It details the OS setup after a clean install.
 ## Other Software
 - Install Brave browser and join the sync chain.
 - Install VS Code.
+- Install `ghostty` and set it up as the default terminal.
