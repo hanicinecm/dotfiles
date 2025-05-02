@@ -9,29 +9,25 @@ blocks:
     segments:
 
       - type: session
-        foreground: cyan
+        foreground: lightGreen
         template: "{{ .UserName }}<default>@</>{{ .HostName }}"
 
       - type: git
         foreground: lightRed
         properties:
           fetch_status: true
-        template: " <default>::</> {{ .HEAD }}{{
-          if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{
-          if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{
-          if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{
-          if .Working.Changed }}  {{ .Working.String}}{{ end }}"
+        template: " <default>::</> {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }}  {{ .Working.String}}{{ end }}"
 
   - type: prompt
     alignment: right
     segments:
 
       - type: shell
-        foreground: blue
+        foreground: lightBlue
         template: "<default>in</> {{ .Name }}"
 
       - type: time
-        foreground: cyan
+        foreground: lightBlue
         properties:
           time_format: 15:04
         template: " <default>at</> {{ .CurrentDate | date .Format }} "
@@ -42,14 +38,13 @@ blocks:
     segments:
 
       - type: python
-        foreground: yellow
+        foreground: lightYellow
         properties:
           home_enabled: true
-        template: "({{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{
-          end }}{{ .Major }}.{{ .Minor }}{{ end }}) "
+        template: "({{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Major }}.{{ .Minor }}{{ end }}) "
 
       - type: path
-        foreground: lightGreen
+        foreground: cyan
         foreground_templates:
           - "{{ if not .Writable }}darkGray{{ end }}"
         template: "{{ .Path }} "
@@ -58,7 +53,7 @@ blocks:
           max_width: 88  # if the path is longer, the parent names will get shortened
 
       - type: text
-        foreground: default
+        foreground: green
         foreground_templates:
           - "{{ if gt .Code 0 }}red{{ end }}"
         template: "➜ "
