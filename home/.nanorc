@@ -1,6 +1,0 @@
-## Convert tabs to spaces (set to 4 spaces per tab)
-set tabsize 4
-set tabstospaces
-
-## Display cursor position (line and column number)
-set constantshow

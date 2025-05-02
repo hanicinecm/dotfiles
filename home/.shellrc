@@ -1,4 +1,5 @@
 # Common shell configuration shared between .bashrc and .zshrc
+# This file will be sourced at the beginning of both .bashrc and .zshrc
 
 # Add bin directories to PATH if they exist and are not already in PATH
 for dir in "$HOME/bin" "$HOME/.local/bin" "/usr/bin"; do
@@ -8,19 +9,6 @@ done
 # Source user environment variables if available
 [[ -f "$HOME/.env" ]] && source "$HOME/.env"
 
-# Set default editor
-export EDITOR="nano"
-
 # History settings
 HISTSIZE=3000
 HISTFILESIZE=3000
-
-# Aliases
-alias grep="grep --color=auto"
-command -v batcat &>/dev/null && alias bat='batcat'
-
-# Activate the base Python environment if uv and venv exist
-if command -v uv &>/dev/null && [[ -d "$HOME/.venvs/base/.venv" ]]; then
-    uv sync --directory "$HOME/.venvs/base" &>/dev/null
-    source "$HOME/.venvs/base/.venv/bin/activate"
-fi
