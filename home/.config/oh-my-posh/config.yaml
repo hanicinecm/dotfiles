@@ -13,7 +13,10 @@ blocks:
         template: "{{ .UserName }}<default>@</>{{ .HostName }}"
 
       - type: git
-        foreground: lightRed
+        foreground: lightYellow
+        foreground_templates:
+          - "{{ if or (.Working.Changed) (.Staging.Changed) }}red{{ end }}"
+          - "{{ if or (gt .Ahead 0) (gt .Behind 0) }}magenta{{ end }}"
         properties:
           fetch_status: true
         template: " <default>::</> {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }}  {{ .Working.String}}{{ end }}"

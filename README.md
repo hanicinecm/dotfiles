@@ -25,3 +25,4 @@ It details the OS setup after a clean install.
 - Install Brave browser and join the sync chain.
 - Install VS Code.
 - Install `ghostty` and set it up as the default terminal.
+- Install the `papirus-icon-theme` and activate it.
