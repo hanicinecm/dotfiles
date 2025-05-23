@@ -8,6 +8,10 @@ blocks:
     alignment: left
     segments:
 
+      - type: os
+        foreground: default
+        template: "{{ if .WSL }}WSL at {{ end }}{{.Icon}} "
+
       - type: session
         foreground: lightGreen
         template: "{{ .UserName }}<default>@</>{{ .HostName }}"
