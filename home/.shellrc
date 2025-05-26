@@ -12,3 +12,6 @@ done
 # History settings
 HISTSIZE=3000
 HISTFILESIZE=3000
+
+# Set the LESS variable
+export LESS='-FRX'
