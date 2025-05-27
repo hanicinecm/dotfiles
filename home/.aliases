@@ -9,4 +9,7 @@ alias lla="ll -A"
 alias grep="grep --color=auto"
 alias bat=batcat
 
-alias ipy="uvx --with-requirements ~/.base-requirements.txt ipython"
+alias actbase="source ~/.venvs/base/.venv/bin/activate"
+ipy() {
+    uv run --project ~/.venvs/base "$@" ipython
+}

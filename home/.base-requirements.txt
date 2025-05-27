@@ -1,6 +1,0 @@
-# This is a requirements file for the transient python environment built by the
-# `ipy` command.
-
-numpy
-polars
-plotly
