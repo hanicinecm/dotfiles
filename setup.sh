@@ -32,9 +32,13 @@ if ! command -v stow &> /dev/null; then
     echo "✅ stow installed."
 fi
 
+# TODO: Properly solve archiving the conflicting files
+rm "$HOME/.bashrc" 2>/dev/null || true
+rm "$HOME/.profile" 2>/dev/null || true
+
 # Symlink the dotfiles using GNU Stow
 stow -d "$DOTFILES_DIR" -t "$HOME" home
-echo "✅ Dotfiles symlinked to $HOME."  # TODO: Will need to archive conflicting files
+echo "✅ Dotfiles symlinked to $HOME."
 
 
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing oh-my-zsh  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
