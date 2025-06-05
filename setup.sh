@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# TODO: Properly solve archiving the conflicting files before stowing them.
+# TODO: Something is adding `. "$HOME/.local/bin/env"` to all the shell config files.
+# TODO: The stow symlinks whole directories, rather than files - that's a problem.
+
 set -e  # Exit on any error
 set -u  # Treat unset variables as errors
 set -o pipefail  # Better error propagation in pipelines
@@ -39,7 +43,7 @@ if ! command -v stow &> /dev/null; then
     echo "✅ stow installed."
 fi
 
-# TODO: Properly solve archiving the conflicting files
+# TODO: Remove the following lines, once the archiving is implemented.
 rm "$HOME/.bashrc" 2>/dev/null || true
 rm "$HOME/.profile" 2>/dev/null || true
 
@@ -131,7 +135,9 @@ if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
     echo -e "⚠️ You need to log out to activate some changes. Do it now!\n"
 fi
 
-# - Install the nerd fonts.
 # - Install Brave browser and join the sync chain.
 # - Install VS Code.
 # - Install the `papirus-icon-theme` and activate it.
+# - Nerd fonts required? Don't know, ghostty has them, don't know about code terminal.
+# - What about the pinned apps?
+# - Set the ghostty terminal as the default terminal emulator.

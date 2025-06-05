@@ -18,8 +18,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # Activate oh-my-posh theme engine if available
 if command -v oh-my-posh &>/dev/null; then
     eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/config.yaml")"
-    # eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/negligible.yaml")"
-    # eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/negligible.omp.json')"
 fi
 
 # Load uv autocompletion if available
