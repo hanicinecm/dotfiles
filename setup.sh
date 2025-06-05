@@ -12,6 +12,7 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     exit 1
 fi
 
+
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Updating system packages  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 sudo apt update
@@ -53,6 +54,7 @@ else
     echo "ℹ️ oh-my-zsh is already installed."
 fi
 
+
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the default shell  ━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 if [ "$SHELL" != "$(which zsh)" ]; then
@@ -63,14 +65,36 @@ else
     echo "ℹ️ Default shell is already zsh."
 fi
 
-# finish - hooray - give the final section with nice emojis
+
+echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing zsh plugins  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+ZSH_CUSTOM="${ZSH_CUSTOM:-$OMZ_DIR/custom}"
+
+declare -A plugins=(
+    [zsh-autosuggestions]="https://github.com/zsh-users/zsh-autosuggestions"
+    [zsh-syntax-highlighting]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
+)
+
+for plugin in "${!plugins[@]}"; do
+    dest="${ZSH_CUSTOM}/plugins/${plugin}"
+    repo="${plugins[$plugin]}"
+
+    if [ -d "$dest" ]; then
+        echo "ℹ️  $plugin already installed at $dest"
+    else
+        echo -e "🔌 Installing plugin: $plugin"
+        git clone "$repo" "$dest"
+        echo -e "\n✅ $plugin cloned to $dest"
+    fi
+done
+
+
 echo -e "\n━━━━━━━━━━━━━━━━ ✅ Setup complete  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
     echo -e "\n⚠️ You need to log out for changes to take effect. Please do it now.\n"
 fi
 
-# - Install `zsh-autosuggestions` and `zsh-syntax-highlighting` plugins.
 # - Install `oh-my-posh`.
 # - Install `uv`.
 # - Install Brave browser and join the sync chain.
