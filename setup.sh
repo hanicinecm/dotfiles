@@ -88,6 +88,15 @@ else
 fi
 
 
+echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing uv  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+if ! command -v uv &> /dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    echo "✅ uv installed."
+else
+    echo "ℹ️ uv is already installed."
+fi
+
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the default shell  ━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 if [ "$SHELL" != "$(which zsh)" ]; then
@@ -102,17 +111,9 @@ fi
 echo -e "\n━━━━━━━━━━━━━━━━ ✅ Setup complete  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
-    read "⚠️ Would you like to log out to activate the changes? (y/n): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "Logging out..."
-        cinnamon-session-quit --logout --no-prompt
-    else
-        echo "Log out manually. Now!"
-
+    echo "⚠️ You need to log out to activate some changes. Do it now!"
 fi
 
-# - Install `oh-my-posh`.
 # - Install `uv`.
 # - Install Brave browser and join the sync chain.
 # - Install VS Code.
