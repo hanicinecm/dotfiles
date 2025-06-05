@@ -55,17 +55,6 @@ else
 fi
 
 
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the default shell  ━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-if [ "$SHELL" != "$(which zsh)" ]; then
-    chsh -s "$(which zsh)"
-    echo "✅ Default shell changed to zsh."
-    LOGOUT_REQUIRED=1
-else
-    echo "ℹ️ Default shell is already zsh."
-fi
-
-
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing zsh plugins  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 ZSH_CUSTOM="${ZSH_CUSTOM:-$OMZ_DIR/custom}"
@@ -82,17 +71,45 @@ for plugin in "${!plugins[@]}"; do
     if [ -d "$dest" ]; then
         echo "ℹ️  $plugin already installed at $dest"
     else
-        echo -e "🔌 Installing plugin: $plugin"
+        echo -e "\n🔌 Installing plugin: $plugin"
         git clone "$repo" "$dest"
         echo -e "\n✅ $plugin cloned to $dest"
     fi
 done
 
 
+echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing oh-my-posh  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+if ! command -v oh-my-posh &> /dev/null; then
+    curl -s https://ohmyposh.dev/install.sh | bash -s
+    echo "✅ oh-my-posh installed."
+else
+    echo "ℹ️ oh-my-posh is already installed."
+fi
+
+
+echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the default shell  ━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+if [ "$SHELL" != "$(which zsh)" ]; then
+    chsh -s "$(which zsh)"
+    echo "✅ Default shell changed to zsh."
+    LOGOUT_REQUIRED=1
+else
+    echo "ℹ️ Default shell is already zsh."
+fi
+
+
 echo -e "\n━━━━━━━━━━━━━━━━ ✅ Setup complete  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
-    echo -e "\n⚠️ You need to log out for changes to take effect. Please do it now.\n"
+    read "⚠️ Would you like to log out to activate the changes? (y/n): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "Logging out..."
+        cinnamon-session-quit --logout --no-prompt
+    else
+        echo "Log out manually. Now!"
+
 fi
 
 # - Install `oh-my-posh`.
