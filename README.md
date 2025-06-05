@@ -3,11 +3,11 @@
 This is my personal system configuration, valid for Linux Mint.
 It details the OS setup after a clean install.
 
-## Initial Setup
+## Initial Manual Setup
 
-- Set up SSH authentication to GitHub by running `ssh-keygen` and adding the public
-  key to the GitHub account.
-- Install `git`.
+- Sort out the GitHub authentication.
+- Clone the **dotfiles** repository to `~/.dotfiles`:
+  - `git clone git@github.com:hanicinecm/dotfiles.git ~/.dotfiles`
 
 ## Dotfiles and Shell
 
@@ -15,7 +15,6 @@ It details the OS setup after a clean install.
 - Install `oh-my-zsh` with `zsh-autosuggestions` and `zsh-syntax-highlighting` plugins.
 - Install `oh-my-posh`.
 - Install `stow`.
-- Clone the .dotfiles by `git@github.com:hanicinecm/dotfiles.git ~/.dotfiles`.
 - Symlink the .dotfiles by `stow home` from `~/.dotfiles`.
 
 ## Other Software
