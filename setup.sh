@@ -97,6 +97,18 @@ else
     echo "ℹ️ uv is already installed."
 fi
 
+
+echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing ghostty  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+if ! command -v ghostty &> /dev/null; then
+    curl -fsSL \
+        https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh | bash
+    echo "✅ ghostty installed."
+else
+    echo "ℹ️ ghostty is already installed."
+fi
+
+
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the default shell  ━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 if [ "$SHELL" != "$(which zsh)" ]; then
@@ -111,11 +123,10 @@ fi
 echo -e "\n━━━━━━━━━━━━━━━━ ✅ Setup complete  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
-    echo "⚠️ You need to log out to activate some changes. Do it now!"
+    echo -e "⚠️ You need to log out to activate some changes. Do it now!\n"
 fi
 
-# - Install `uv`.
+# - Install the nerd fonts.
 # - Install Brave browser and join the sync chain.
 # - Install VS Code.
-# - Install `ghostty` and set it up as the default terminal.
 # - Install the `papirus-icon-theme` and activate it.
