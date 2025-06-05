@@ -21,7 +21,12 @@ sudo apt upgrade -y
 
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing apt packages  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
-APT_PACKAGES=(stow zsh bat)
+APT_PACKAGES=(
+    stow
+    zsh
+    bat
+    libonig5  # required by ghostty
+)
 sudo apt install -y "${APT_PACKAGES[@]}"
 echo "✅ APT packages installed: ${APT_PACKAGES[*]}"
 

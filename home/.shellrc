@@ -2,7 +2,7 @@
 # This file will be sourced at the beginning of both .bashrc and .zshrc
 
 # Add bin directories to PATH if they exist and are not already in PATH
-for dir in "$HOME/bin" "$HOME/.local/bin" "/usr/bin"; do
+for dir in "$HOME/bin" "$HOME/.local/bin" "$HOME/.local/bin" "/usr/bin"; do
     [[ -d "$dir" && ":$PATH:" != *":$dir:"* ]] && PATH="$dir:$PATH"
 done
 
