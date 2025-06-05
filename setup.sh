@@ -5,6 +5,7 @@ set -u  # Treat unset variables as errors
 set -o pipefail  # Better error propagation in pipelines
 
 DOTFILES_DIR="$HOME/.dotfiles"
+LOGOUT_REQUIRED=0
 
 if [ ! -d "$DOTFILES_DIR" ]; then
     echo "❌ Error: DOTFILES_DIR '$DOTFILES_DIR' does not exist." >&2
@@ -56,7 +57,17 @@ echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the def
 
 if [ "$SHELL" != "$(which zsh)" ]; then
     chsh -s "$(which zsh)"
-    echo "✅ Default shell changed to zsh. You may need to log out and back in."
+    echo "✅ Default shell changed to zsh."
+    LOGOUT_REQUIRED=1
+else
+    echo "ℹ️ Default shell is already zsh."
+fi
+
+# finish - hooray - give the final section with nice emojis
+echo -e "\n━━━━━━━━━━━━━━━━ ✅ Setup complete  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
+    echo -e "\n⚠️ You need to log out for changes to take effect. Please do it now.\n"
 fi
 
 # - Install `zsh-autosuggestions` and `zsh-syntax-highlighting` plugins.
