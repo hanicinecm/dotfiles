@@ -17,6 +17,13 @@ sudo apt update
 sudo apt upgrade -y
 
 
+echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing apt packages  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+APT_PACKAGES=(stow zsh bat)
+sudo apt install -y "${APT_PACKAGES[@]}"
+echo "✅ APT packages installed: ${APT_PACKAGES[*]}"
+
+
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Symlinking the dotfiles  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
 # Install GNU Stow, if not installed already
@@ -27,17 +34,7 @@ fi
 
 # Symlink the dotfiles using GNU Stow
 stow -d "$DOTFILES_DIR" -t "$HOME" home
-echo "✅ Dotfiles symlinked to $HOME."
-
-
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing zsh  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-if ! command -v zsh &> /dev/null; then
-    sudo apt install -y zsh
-    echo "✅ zsh installed."
-else
-    echo "ℹ️ zsh is already installed."
-fi
+echo "✅ Dotfiles symlinked to $HOME."  # TODO: Will need to archive conflicting files
 
 
 echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing oh-my-zsh  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -51,16 +48,16 @@ else
     echo "ℹ️ oh-my-zsh is already installed."
 fi
 
-# # Set zsh as default shell for current user
-# if [ "$SHELL" != "$(which zsh)" ]; then
-#     chsh -s "$(which zsh)"
-#     echo "✅ Default shell changed to zsh. You may need to log out and back in."
-# fi
+echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the default shell  ━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
-# - Install `oh-my-zsh` with `zsh-autosuggestions` and `zsh-syntax-highlighting` plugins.
+if [ "$SHELL" != "$(which zsh)" ]; then
+    chsh -s "$(which zsh)"
+    echo "✅ Default shell changed to zsh. You may need to log out and back in."
+fi
+
+# - Install `zsh-autosuggestions` and `zsh-syntax-highlighting` plugins.
 # - Install `oh-my-posh`.
 # - Install `uv`.
-# - Install `batcat` with `sudo apt install bat`.
 # - Install Brave browser and join the sync chain.
 # - Install VS Code.
 # - Install `ghostty` and set it up as the default terminal.
