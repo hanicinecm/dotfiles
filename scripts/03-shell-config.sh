@@ -53,7 +53,7 @@ fi
 
 # Set the zsh as the default shell:
 if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "ℹ️ Changing the default shell to zsh."
     chsh -s "$(which zsh)"
-    echo "✅ Default shell changed to zsh."
     LOGOUT_REQUIRED=1
 fi

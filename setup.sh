@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
 
 # Define some global variables, accessible to all scripts sourced by this script
@@ -33,12 +34,24 @@ for script in "$SCRIPTS_DIR"/*.sh; do
 
 done
 
+echo ""
 echo "🎉 All scripts executed successfully."
 
 # Prompt the user to log out if required
 echo "👍 Setup complete."
 if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
-    echo ""
     echo "🔔 Some changes require you to log out and back in for them to take effect."
     echo "Please log out now."
 fi
+
+
+# TODO: Something is adding `. "$HOME/.local/bin/env"` to all the shell config files.
+# TODO: The stow symlinks whole directories, rather than files - that's a problem.
+
+
+# - Install Brave browser and join the sync chain.
+# - Install VS Code.
+# - Install the `papirus-icon-theme` and activate it.
+# - Nerd fonts required? Don't know, ghostty has them, don't know about code terminal.
+# - What about the pinned apps?
+# - Add the dconf dump and load in from the script.
