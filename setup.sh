@@ -23,9 +23,11 @@ sudo apt upgrade -y
 # Execute all the setup scripts one by one
 for script in "$SCRIPTS_DIR"/*.sh; do
 
+    echo ""
     echo "🧩 Running $(basename "$script")"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     source "$script"
+    echo ""
     echo "✅ Finished $(basename "$script")"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
