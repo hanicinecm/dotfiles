@@ -2,6 +2,13 @@
 # repository and from elsewhere.
 
 
+# Add the third-party repositories:
+if ! grep -q papirus /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+    sudo add-apt-repository -y ppa:papirus/papirus
+    sudo apt update
+fi
+
+
 # Install apt packages:
 packages=(
     stow
