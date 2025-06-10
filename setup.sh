@@ -50,7 +50,5 @@ if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
 fi
 
 
-# - Install Brave browser and join the sync chain.
 # - Install VS Code.
-# - Install the `papirus-icon-theme` and activate it.
 # - Nerd fonts required? Don't know, ghostty has them, don't know about code terminal.

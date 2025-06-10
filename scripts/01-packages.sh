@@ -38,3 +38,12 @@ if ! command -v ghostty &> /dev/null; then
 else
     echo "ℹ️ ghostty is already installed."
 fi
+
+
+# The Brave browser:
+if ! command -v brave-browser &> /dev/null; then
+    echo "🔧 Installing Brave browser..."
+    curl -fsS https://dl.brave.com/install.sh | sh
+else
+    echo "ℹ️ Brave browser is already installed."
+fi
