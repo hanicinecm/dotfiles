@@ -48,3 +48,5 @@ if ! command -v brave-browser &> /dev/null; then
 else
     echo "ℹ️ Brave browser is already installed."
 fi
+
+# TODO: Figure out how to set the desktop background.
