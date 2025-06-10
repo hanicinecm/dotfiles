@@ -25,7 +25,7 @@ fi
 ZSH_CUSTOM="${ZSH_CUSTOM:-$OMZ_DIR/custom}"
 
 declare -A plugins=(
-    [zsh-autosuggestions]="https://github.com/zsh-users/zsh-autosuggestions.got"
+    [zsh-autosuggestions]="https://github.com/zsh-users/zsh-autosuggestions.git"
     [zsh-syntax-highlighting]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
 )
 
