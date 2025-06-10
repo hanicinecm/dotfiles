@@ -1,6 +1,7 @@
 # This script installs all the essential packages which are available in the
 # official apt repositories.
 
+
 packages=(
     stow
     zsh

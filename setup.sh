@@ -36,6 +36,7 @@ done
 echo "🎉 All scripts executed successfully."
 
 # Prompt the user to log out if required
+echo "👍 Setup complete."
 if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
     echo ""
     echo "🔔 Some changes require you to log out and back in for them to take effect."
