@@ -34,6 +34,11 @@ for script in "$SCRIPTS_DIR"/*.sh; do
 
 done
 
+
+# Load the dconf settings
+dconf load /org/cinnamon/ < "$DOTFILES_DIR/dconf/cinnamon-settings.dconf"
+
+
 echo ""
 echo "🎉 All scripts executed successfully."
 
@@ -45,13 +50,7 @@ if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
 fi
 
 
-# TODO: Something is adding `. "$HOME/.local/bin/env"` to all the shell config files.
-# TODO: The stow symlinks whole directories, rather than files - that's a problem.
-
-
 # - Install Brave browser and join the sync chain.
 # - Install VS Code.
 # - Install the `papirus-icon-theme` and activate it.
 # - Nerd fonts required? Don't know, ghostty has them, don't know about code terminal.
-# - What about the pinned apps?
-# - Add the dconf dump and load in from the script.
