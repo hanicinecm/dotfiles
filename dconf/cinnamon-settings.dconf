@@ -1,3 +1,11 @@
 [desktop/applications/terminal]
 exec='ghostty'
-exec-args='--'
+exec-arg='--'
+
+[desktop/interface]
+cursor-theme='Yaru'
+gtk-theme='Mint-Y-Dark-Aqua'
+icon-theme='Papirus-Dark'
+
+[theme]
+name='Mint-Y-Dark-Aqua'
