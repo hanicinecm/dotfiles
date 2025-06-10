@@ -1,6 +1,10 @@
 # This script installs all the essential packages, both from the official apt
 # repository and from elsewhere.
 
+# Add the third-party repositories:
+sudo add-apt-repository -y ppa:papirus/papirus
+sudo apt update
+
 
 # Install apt packages:
 packages=(
@@ -8,8 +12,8 @@ packages=(
     zsh
     bat
     curl
-    # required by ghostty:
     libonig5
+    papirus-icon-theme
 )
 sudo apt install -y "${packages[@]}"
 
