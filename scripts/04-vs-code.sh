@@ -1,5 +1,5 @@
 # This script installs the Visual Studio Code editor and sets it up with the
-# necessary extensions and settings.
+# necessary settings and configuration.
 
 
 if ! command -v code &> /dev/null; then
@@ -20,5 +20,4 @@ else
 
 fi
 
-# TODO: Install the extensions.
-# TODO: Install the settings and configurations.
+# TODO: Sort out the settings and configurations.

@@ -50,5 +50,4 @@ if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
 fi
 
 
-# - Install VS Code.
-# - Nerd fonts required? Don't know, ghostty has them, don't know about code terminal.
+# TODO: Install a Nerd Font and configure Ghostty and VSCode to use it.

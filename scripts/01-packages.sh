@@ -3,6 +3,7 @@
 
 
 # Add the third-party repositories:
+# TODO: Don't bother with the papirus ppa - just clone it and move the icons...
 if ! grep -q papirus /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
     sudo add-apt-repository -y ppa:papirus/papirus
     sudo apt update
