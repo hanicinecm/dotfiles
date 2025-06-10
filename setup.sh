@@ -1,143 +1,41 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-# TODO: Properly solve archiving the conflicting files before stowing them.
-# TODO: Something is adding `. "$HOME/.local/bin/env"` to all the shell config files.
-# TODO: The stow symlinks whole directories, rather than files - that's a problem.
-
-set -e  # Exit on any error
-set -u  # Treat unset variables as errors
-set -o pipefail  # Better error propagation in pipelines
-
+# Define some global variables, accessible to all scripts sourced by this script
 DOTFILES_DIR="$HOME/.dotfiles"
-LOGOUT_REQUIRED=0
+LOGOUT_REQUIRED=0  # Needs to be set to 1 by a script, if it requires a logout
 
-if [ ! -d "$DOTFILES_DIR" ]; then
-    echo "❌ Error: DOTFILES_DIR '$DOTFILES_DIR' does not exist." >&2
+
+# Check if scripts directory exists and has scripts
+SCRIPTS_DIR="$DOTFILES_DIR/scripts"
+if [ ! -d "$SCRIPTS_DIR" ] || [ -z "$(ls -A "$SCRIPTS_DIR"/*.sh 2>/dev/null)" ]; then
+    echo "❌ No setup scripts found in $SCRIPTS_DIR."
     exit 1
 fi
 
 
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Updating system packages  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
+# Start with the system update
+echo "🔄 Updating system packages..."
 sudo apt update
 sudo apt upgrade -y
 
 
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing apt packages  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+# Execute all the setup scripts one by one
+for script in "$SCRIPTS_DIR"/*.sh; do
 
-APT_PACKAGES=(
-    stow
-    zsh
-    bat
-    libonig5  # required by ghostty
-)
-sudo apt install -y "${APT_PACKAGES[@]}"
-echo "✅ APT packages installed: ${APT_PACKAGES[*]}"
+    echo "🧩 Running $(basename "$script")"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    source "$script"
+    echo "✅ Finished $(basename "$script")"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Symlinking the dotfiles  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-# Install GNU Stow, if not installed already
-if ! command -v stow &> /dev/null; then
-    sudo apt install -y stow
-    echo "✅ stow installed."
-fi
-
-# TODO: Remove the following lines, once the archiving is implemented.
-rm "$HOME/.bashrc" 2>/dev/null || true
-rm "$HOME/.profile" 2>/dev/null || true
-
-# Symlink the dotfiles using GNU Stow
-stow -d "$DOTFILES_DIR" -t "$HOME" home
-echo "✅ Dotfiles symlinked to $HOME."
-
-
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing oh-my-zsh  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-OMZ_URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-OMZ_DIR="$HOME/.oh-my-zsh"
-if [ ! -d "$OMZ_DIR" ]; then
-    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL "$OMZ_URL")"
-    echo "✅ oh-my-zsh installed."
-else
-    echo "ℹ️ oh-my-zsh is already installed."
-fi
-
-
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing zsh plugins  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-ZSH_CUSTOM="${ZSH_CUSTOM:-$OMZ_DIR/custom}"
-
-declare -A plugins=(
-    [zsh-autosuggestions]="https://github.com/zsh-users/zsh-autosuggestions"
-    [zsh-syntax-highlighting]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
-)
-
-for plugin in "${!plugins[@]}"; do
-    dest="${ZSH_CUSTOM}/plugins/${plugin}"
-    repo="${plugins[$plugin]}"
-
-    if [ -d "$dest" ]; then
-        echo "ℹ️  $plugin already installed at $dest"
-    else
-        echo -e "\n🔌 Installing plugin: $plugin"
-        git clone "$repo" "$dest"
-        echo -e "\n✅ $plugin cloned to $dest"
-    fi
 done
 
+echo "🎉 All scripts executed successfully."
 
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing oh-my-posh  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-if ! command -v oh-my-posh &> /dev/null; then
-    curl -s https://ohmyposh.dev/install.sh | bash -s
-    echo "✅ oh-my-posh installed."
-else
-    echo "ℹ️ oh-my-posh is already installed."
-fi
-
-
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing uv  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-if ! command -v uv &> /dev/null; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    echo "✅ uv installed."
-else
-    echo "ℹ️ uv is already installed."
-fi
-
-
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Installing ghostty  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-if ! command -v ghostty &> /dev/null; then
-    curl -fsSL \
-        https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh | bash
-    echo "✅ ghostty installed."
-else
-    echo "ℹ️ ghostty is already installed."
-fi
-
-
-echo -e "\n━━━━━━━━━━━━━━━━ 🔧 Setting the default shell  ━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-if [ "$SHELL" != "$(which zsh)" ]; then
-    chsh -s "$(which zsh)"
-    echo "✅ Default shell changed to zsh."
-    LOGOUT_REQUIRED=1
-else
-    echo "ℹ️ Default shell is already zsh."
-fi
-
-
-echo -e "\n━━━━━━━━━━━━━━━━ ✅ Setup complete  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-
+# Prompt the user to log out if required
 if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
-    echo -e "⚠️ You need to log out to activate some changes. Do it now!\n"
+    echo ""
+    echo "🔔 Some changes require you to log out and back in for them to take effect."
+    echo "Please log out now."
 fi
-
-# - Install Brave browser and join the sync chain.
-# - Install VS Code.
-# - Install the `papirus-icon-theme` and activate it.
-# - Nerd fonts required? Don't know, ghostty has them, don't know about code terminal.
-# - What about the pinned apps?
-# - Set the ghostty terminal as the default terminal emulator.
