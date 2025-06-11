@@ -32,8 +32,19 @@ for dot in .zshrc .bashrc .gitconfig; do
 done
 
 # Check that the 'act' alias works (activates base env)
-check ! command -v python
-check act && check which python
+if ! command -v python >/dev/null 2>&1; then
+    echo -e "${green}PASS${reset}: python not found"
+else
+    echo -e "${red}FAIL${reset}: python should not be found"
+    failures=$((failures+1))
+fi
+
+if act >/dev/null 2>&1 && which python >/dev/null 2>&1; then
+    echo -e "${green}PASS${reset}: act and python found"
+else
+    echo -e "${red}FAIL${reset}: act or python not found"
+    failures=$((failures+1))
+fi
 
 # Check that 'ipy' runs (should print IPython banner)
 check ipy --version

@@ -34,10 +34,10 @@ jobs:
         run: bash ./setup.sh
 
       - name: Run test suite (first run)
-        run: bash ./test_setup.sh
+        run: bash ./test/test_setup.sh
 
       - name: Run setup.sh (idempotence test)
         run: bash ./setup.sh
 
       - name: Run test suite (after idempotence)
-        run: bash ./test_setup.sh
+        run: bash ./test/test_setup.sh
