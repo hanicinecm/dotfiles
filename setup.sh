@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: Install a Nerd Font and configure Ghostty and VSCode to use it.
-# TODO: For some reason, the system dark mode is not recognized by apps.
-# TODO: Add the system background to the dconf settings.
-
 set -euo pipefail
 
 # Define some global variables, accessible to all scripts sourced by this script
@@ -43,16 +39,13 @@ echo "🔄 Syncing Python environment..."
 uv sync --project ~/.venvs/base
 
 
-# Load the dconf settings
-dconf load /org/cinnamon/ < "$DOTFILES_DIR/dconf/cinnamon-settings.dconf"
-
-
 echo ""
 echo "🎉 The setup executed successfully."
 
 
 # Set the zsh as the default shell:
 if [ "$SHELL" != "$(which zsh)" ]; then
+    echo ""
     echo "ℹ️ Changing the default shell to zsh."
     chsh -s "$(which zsh)"
     echo "🔔 Default shell has been changed. You have to log out and in again."

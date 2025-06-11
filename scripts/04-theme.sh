@@ -2,6 +2,7 @@
 # Instead of adding the PPA, the themes will be cloned from the GitHub repository
 # and symlinked to the user's .icon directory.
 
+# The Papirus icon theme:
 if [ ! -d "$HOME/.icons/Papirus" ]; then
     # Clone the Papirus icon theme repository:
     echo "🔧 Cloning Papirus icon theme..."

@@ -46,6 +46,15 @@ done
 
 # Install oh-my-posh:
 if ! command -v oh-my-posh &> /dev/null; then
+    echo "🔧 Installing oh-my-posh theme engine."
     curl -s https://ohmyposh.dev/install.sh | bash -s
-    echo "✅ Installing oh-my-posh theme engine."
+    echo "✅ oh-my-posh installed."
+fi
+
+
+# Install JetBrains Mono Nerd Font if not already installed:
+if ! fc-list | grep -qi "JetBrainsMono Nerd Font"; then
+    echo "🔧 Installing JetBrains Mono Nerd Font..."
+    "$HOME/.local/bin/oh-my-posh" font install JetBrainsMono
+    echo "✅ JetBrains Mono Nerd Font installed."
 fi

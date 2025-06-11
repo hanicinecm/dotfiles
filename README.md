@@ -1,11 +1,11 @@
 # System Configuration
 
-This is my personal system configuration, valid for Linux Mint Cinnamon.
-It details the OS setup after a clean install.
+This is my personal system configuration, valid for Linux Mint Cinnamon
+(or theoretically for any other Ubuntu-based distribution).
 
 ## Initial Manual Setup
 
-Sort out the GitHub authentication and clone the **dotfiles** repository to
+Sort out the GitHub authentication and clone the __dotfiles__ repository to
 `~/.dotfiles`:
 
 ```bash
@@ -24,9 +24,17 @@ bash ~/.dotfiles/setup.sh
 
 Some actions could not have been automized by the setup script:
 
-- Set Brave as the default browser.
+- Configure the _Preferred Applications_:
+  - Brave Browser for __Web__
+  - Ghostty for __Terminal__
+- Configure the _Themes_:
+  - __Dark__ system theme
+  - __Papirus__ icons
+  - __Yaru__ mouse pointer
+- Set Brave as the default browser (by running the browser for the first time and
+  following the prompts).
 - Join the sync chain in Brave.
-- Log in to VSCode and sync the settings.
+- Log in to VS Code and sync the settings.
 
 ## Documentation
 
@@ -39,10 +47,8 @@ This `setup.sh` script will automatically do the following:
 - Safely symlink of all the dotfiles from the `~/.dotfiles/home/` directory to `~`.
   This covers various configuration files (such as `.zshrc`, `.bashrc`, `.gitconfig`,
   etc.), as well as definition of the base python environment.
-- Load the Cinnamon `dconf` with various desktop settings, such as the themes,
-  default terminal emulator, etc.
 
-The script is *idempotent*, which means it can be executed on already set-up system
+The script is _idempotent_, which means it can be executed on already set-up system
 to achieve some partial setup only.
 
 ### Structure and Functionality
@@ -51,7 +57,9 @@ The `setup.sh` script will:
 
 - Update all the system packages
 - Execute all the shell scripts found in `scripts/` directory
-- Load the `dconf` settings file from the `dconf/` directory
+
+The shell scripts will install bunch of packages, symlink all the dotfiles, and set up
+the shell.
 
 The `home/` directory in this repo mirrors the user home directory `~` on the system.
 All the files in `home/` will be symlinked to the same relative paths inside `~` by the
