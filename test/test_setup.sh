@@ -37,6 +37,7 @@ else
     failures=$((failures+1))
 fi
 
+# TODO: The following test is failing...
 if act >/dev/null 2>&1 && bash -c "act >/dev/null 2>&1; command -v python >/dev/null 2>&1"; then
     echo -e "${green}PASS${reset}: base env activated successfully"
 else
@@ -45,6 +46,7 @@ else
 fi
 
 # Check that 'ipy' runs (should print IPython banner)
+# TODO: The following test is failing...
 check ipy --version
 
 if [[ $failures -eq 0 ]]; then
