@@ -10,9 +10,9 @@ if [ ! -d "$HOME/.icons/Papirus" ]; then
     # Symlink the icons to the user's .icons directory:
     echo "🔗 Symlinking Papirus icons..."
     mkdir -p "$HOME/.icons"
-    ln -s "$HOME/.themes/papirus-icon-theme/Papirus" "$HOME/.icons/Papirus"
-    ln -s "$HOME/.themes/papirus-icon-theme/Papirus-Dark" "$HOME/.icons/Papirus-Dark"
-    ln -s "$HOME/.themes/papirus-icon-theme/Papirus-Light" "$HOME/.icons/Papirus-Light"
+    ln -sf "$HOME/.themes/papirus-icon-theme/Papirus" "$HOME/.icons/Papirus"
+    ln -sf "$HOME/.themes/papirus-icon-theme/Papirus-Dark" "$HOME/.icons/Papirus-Dark"
+    ln -sf "$HOME/.themes/papirus-icon-theme/Papirus-Light" "$HOME/.icons/Papirus-Light"
 else
     echo "ℹ️ Papirus icon theme is already installed."
 fi

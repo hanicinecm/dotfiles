@@ -1,0 +1,43 @@
+name: Dotfiles CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-dotfiles:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        # For Linux Mint, use a Docker container with Mint image
+        include:
+          - os: ubuntu-latest
+          - os: ubuntu-latest
+            container:
+              image: linuxmintd/mint21-amd64
+    steps:
+      - name: Install dependencies (Mint only)
+        if: matrix.container != null
+        run: |
+          apt-get update && apt-get install -y git sudo curl
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x setup.sh test_setup.sh scripts/*.sh
+
+      - name: Run setup.sh (first run)
+        run: bash ./setup.sh
+
+      - name: Run test suite (first run)
+        run: bash ./test_setup.sh
+
+      - name: Run setup.sh (idempotence test)
+        run: bash ./setup.sh
+
+      - name: Run test suite (after idempotence)
+        run: bash ./test_setup.sh
