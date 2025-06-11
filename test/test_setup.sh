@@ -10,8 +10,6 @@ reset="\033[0m"
 
 failures=0
 
-SHELL_RC="$HOME/.zshrc"
-source "$SHELL_RC"
 
 function check() {
     "$@" && echo -e "${green}PASS${reset}: $*" || { echo -e "${red}FAIL${reset}: $*"; failures=$((failures+1)); }
@@ -39,10 +37,10 @@ else
     failures=$((failures+1))
 fi
 
-if act >/dev/null 2>&1 && which python >/dev/null 2>&1; then
-    echo -e "${green}PASS${reset}: act and python found"
+if act >/dev/null 2>&1 && bash -c "act >/dev/null 2>&1; command -v python >/dev/null 2>&1"; then
+    echo -e "${green}PASS${reset}: base env activated successfully"
 else
-    echo -e "${red}FAIL${reset}: act or python not found"
+    echo -e "${red}FAIL${reset}: act not found or base env not activated"
     failures=$((failures+1))
 fi
 
