@@ -15,6 +15,7 @@ fi
 
 
 # Start with the system update
+echo ""
 echo "🔄 Updating system packages..."
 sudo apt update
 sudo apt upgrade -y
@@ -35,6 +36,7 @@ done
 
 
 # Sync the base python environment
+echo ""
 echo "🔄 Syncing Python environment..."
 uv sync --project ~/.venvs/base
 
