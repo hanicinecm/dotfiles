@@ -2,10 +2,10 @@
 # repository and from elsewhere.
 
 
-# Add the third-party repositories:
-# TODO: Don't bother with the papirus ppa - just clone it and move the icons...
-if ! grep -q papirus /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-    sudo add-apt-repository -y ppa:papirus/papirus
+# Add the Zettlr apt repository:
+if ! grep -q zettlr /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+    curl -s --compressed "https://apt.zettlr.com/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/zettlr_apt.gpg > /dev/null
+    sudo curl -s --compressed -o /etc/apt/sources.list.d/zettlr.list "https://apt.zettlr.com/zettlr.list"
     sudo apt update
 fi
 
@@ -17,7 +17,8 @@ packages=(
     bat
     curl
     libonig5
-    papirus-icon-theme
+    inkscape
+    zettlr
 )
 sudo apt install -y "${packages[@]}"
 
@@ -48,5 +49,3 @@ if ! command -v brave-browser &> /dev/null; then
 else
     echo "ℹ️ Brave browser is already installed."
 fi
-
-# TODO: Figure out how to set the desktop background.
