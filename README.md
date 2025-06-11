@@ -30,16 +30,16 @@ Some actions could not have been automized by the setup script:
 
 ## Documentation
 
-This `setup.sh` script will take care of the following:
+This `setup.sh` script will automatically do the following:
 
-- Installation of various packages, such as `uv`, `ghostty`, `brave`, etc.
-- Setting up `zsh` as the default shell and installation and configuration of
-  `oh-my-zsh` frameworks (with plugins) and the `oh-my-posh` prompt.
-- Safe symlinking of all the dotfiles from the `~/.dotfiles/home/` directory to `~`.
+- Install various packages, such as `uv`, `ghostty`, `brave`, `zettlr`, `inkscape`,
+  `code`, etc.
+- Set up `zsh` as the default shell and install and configure the `oh-my-zsh` framework
+  (with plugins) and the `oh-my-posh` prompt engine.
+- Safely symlink of all the dotfiles from the `~/.dotfiles/home/` directory to `~`.
   This covers various configuration files (such as `.zshrc`, `.bashrc`, `.gitconfig`,
   etc.), as well as definition of the base python environment.
-- Installation and setup of Visual Studio Code.
-- Loading the Cinnamon `dconf` with various desktop settings, such as the themes,
+- Load the Cinnamon `dconf` with various desktop settings, such as the themes,
   default terminal emulator, etc.
 
 The script is *idempotent*, which means it can be executed on already set-up system

@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
+# TODO: Install a Nerd Font and configure Ghostty and VSCode to use it.
+
 set -euo pipefail
 
 # Define some global variables, accessible to all scripts sourced by this script
 DOTFILES_DIR="$HOME/.dotfiles"
-LOGOUT_REQUIRED=0  # Needs to be set to 1 by a script, if it requires a logout
 
 
 # Check if scripts directory exists and has scripts
@@ -40,14 +41,12 @@ dconf load /org/cinnamon/ < "$DOTFILES_DIR/dconf/cinnamon-settings.dconf"
 
 
 echo ""
-echo "🎉 All scripts executed successfully."
+echo "🎉 The setup executed successfully."
 
-# Prompt the user to log out if required
-echo "👍 Setup complete."
-if [ "$LOGOUT_REQUIRED" -eq 1 ]; then
-    echo "🔔 Some changes require you to log out and back in for them to take effect."
-    echo "Please log out now."
+
+# Set the zsh as the default shell:
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "ℹ️ Changing the default shell to zsh."
+    chsh -s "$(which zsh)"
+    echo "🔔 Default shell has been changed. You have to log out and in again."
 fi
-
-
-# TODO: Install a Nerd Font and configure Ghostty and VSCode to use it.
