@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # TODO: Install a Nerd Font and configure Ghostty and VSCode to use it.
+# TODO: For some reason, the system dark mode is not recognized by apps.
+# TODO: Add the system background to the dconf settings.
 
 set -euo pipefail
 
@@ -34,6 +36,11 @@ for script in "$SCRIPTS_DIR"/*.sh; do
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 done
+
+
+# Sync the base python environment
+echo "🔄 Syncing Python environment..."
+uv sync --project ~/.venvs/base
 
 
 # Load the dconf settings

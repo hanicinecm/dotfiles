@@ -47,6 +47,12 @@ to achieve some partial setup only.
 
 ### Structure and Functionality
 
+The `setup.sh` script will:
+
+- Update all the system packages
+- Execute all the shell scripts found in `scripts/` directory
+- Load the `dconf` settings file from the `dconf/` directory
+
 The `home/` directory in this repo mirrors the user home directory `~` on the system.
 All the files in `home/` will be symlinked to the same relative paths inside `~` by the
 `setup.sh` script.
@@ -54,5 +60,19 @@ Prior to the symlinking, the configuration files which already exist in the targ
 directory (and which differ from the files in the source `home/` directory) will be
 moved into a timestamped archive.
 
-- TODO: Document the `scripts/` and `setup.sh`
-- TODO: Document the base Python environment with the `act` and `ipy` commands
+### Base Python Environment
+
+Python environment is created by the `setup.sh` script.
+The environment is implemented as a `uv` project called `base`, inside `~/.venvs/`.
+The python version and the dependencies are controled by the
+`home/.venv/base/pyproject.toml` file, symlinked to `~` directory.
+
+Two related aliases are sourced from the dotfiles:
+
+- `act`: This will activate the `base` environment.
+- `ipy`: This will run `ipython` inside the `base` environment. The `ipy` command is
+  not a simple alias, but rather a function, which can receive additional arguments.
+  The additional arguments will be forwarded straight into the `uv run` command, which
+  executes the `ipython`.
+  As an example, `ipy --with pandas` will run IPython from the `base` environment
+  with the additional `pandas` package added temporarily, only for this execution.
