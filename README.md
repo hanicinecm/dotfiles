@@ -3,26 +3,31 @@
 This is my personal system configuration, valid for Linux Mint Cinnamon
 (or theoretically for any other Ubuntu-based distribution).
 
+The repository contains various configuration files (dotfiles), as well as a setup
+script, which installs all the dependencies and symlinks them to their place.
+
 ## Initial Manual Setup
 
-Sort out the GitHub authentication and clone the __dotfiles__ repository to
-`~/.dotfiles`:
+Clone the __dotfiles__ repository to `~/.dotfiles`.
 
-```bash
-git clone git@github.com:hanicinecm/dotfiles.git ~/.dotfiles
+```shell
+git clone https://github.com/hanicinecm/dotfiles.git ~/.dotfiles
 ```
+
+Note, that the `~/.dotfiles` location is actually _mandatory_, as it is hard-coded in
+the setup script.
 
 ## Automated Setup
 
 Execute the `setup.sh` script.
 
-```bash
+```shell
 bash ~/.dotfiles/setup.sh
 ```
 
 ## Final Manual Setup
 
-Some actions could not have been automized by the setup script:
+Some actions could not be automized by the setup script:
 
 - Configure the _Preferred Applications_:
   - Brave Browser for __Web__
@@ -35,13 +40,13 @@ Some actions could not have been automized by the setup script:
   following the prompts).
 - Join the sync chain in Brave.
 - Log in to VS Code and sync the settings.
+- Set up the SSH authentication to GitHub.
 
 ## Documentation
 
 This `setup.sh` script will automatically do the following:
 
-- Install various packages, such as `uv`, `ghostty`, `brave`, `zettlr`, `inkscape`,
-  `code`, etc.
+- Install various packages, such as `uv`, `ghostty`, `brave`, `code`, etc.
 - Set up `zsh` as the default shell and install and configure the `oh-my-zsh` framework
   (with plugins) and the `oh-my-posh` prompt engine.
 - Safely symlink of all the dotfiles from the `~/.dotfiles/home/` directory to `~`.
@@ -66,7 +71,7 @@ All the files in `home/` will be symlinked to the same relative paths inside `~`
 `setup.sh` script.
 Prior to the symlinking, the configuration files which already exist in the target `~`
 directory (and which differ from the files in the source `home/` directory) will be
-moved into a timestamped archive.
+moved into a timestamped archive inside `~/.archived_dotfiles/`.
 
 ### Base Python Environment
 
@@ -83,4 +88,4 @@ Two related aliases are sourced from the dotfiles:
   The additional arguments will be forwarded straight into the `uv run` command, which
   executes the `ipython`.
   As an example, `ipy --with pandas` will run IPython from the `base` environment
-  with the additional `pandas` package added temporarily, only for this execution.
+  with the additional `pandas` library installed temporarily, only for this call.

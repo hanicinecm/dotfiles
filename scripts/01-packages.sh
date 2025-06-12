@@ -2,14 +2,6 @@
 # repository and from elsewhere.
 
 
-# Add the Zettlr apt repository:
-if ! grep -q zettlr /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-    curl -s --compressed "https://apt.zettlr.com/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/zettlr_apt.gpg > /dev/null
-    sudo curl -s --compressed -o /etc/apt/sources.list.d/zettlr.list "https://apt.zettlr.com/zettlr.list"
-    sudo apt update
-fi
-
-
 # Install apt packages:
 packages=(
     stow
@@ -17,8 +9,6 @@ packages=(
     bat
     curl
     libonig5
-    inkscape
-    zettlr
 )
 sudo apt install -y "${packages[@]}"
 
