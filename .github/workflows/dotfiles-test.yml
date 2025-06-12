@@ -1,0 +1,46 @@
+name: Dotfiles Integration Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-dotfiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo into ~/.dotfiles
+        uses: actions/checkout@v4
+        with:
+          path: .dotfiles
+
+      - name: 🧹 Preprocess setup.sh (remove apt upgrade)
+        run: |
+          sed -i '/apt upgrade/d' ~/.dotfiles/setup.sh
+          chmod +x ~/.dotfiles/setup.sh
+
+      - name: ⚙️ Run setup script (first run)
+        shell: bash
+        run: ~/.dotfiles/setup.sh
+
+      - name: ✅ Run test with bash
+        shell: bash
+        run: ~/.dotfiles/test/test_setup.sh
+
+      - name: ✅ Run test with zsh
+        shell: zsh
+        run: ~/.dotfiles/test/test_setup.sh
+
+      - name: 🔁 Re-run setup script for idempotence
+        shell: bash
+        run: ~/.dotfiles/setup.sh
+
+      - name: 🔁 Re-run test with bash
+        shell: bash
+        run: ~/.dotfiles/test/test_setup.sh
+
+      - name: 🔁 Re-run test with zsh
+        shell: zsh
+        run: ~/.dotfiles/test/test_setup.sh
