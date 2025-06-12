@@ -11,10 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repo into ~/.dotfiles
+      - name: 📥 Checkout repo into temporary workspace
         uses: actions/checkout@v4
         with:
-          path: .dotfiles
+          path: temp-dotfiles
+
+      - name: 🏠 Move repo to ~/.dotfiles
+        run: |
+          mv temp-dotfiles "$HOME/.dotfiles"
 
       - name: 🧹 Preprocess setup.sh (remove apt upgrade)
         run: |
