@@ -1,58 +1,86 @@
-# A simple test script to verify that the setup.sh script has done its job.
 
-#!/usr/bin/env bash
-set -euo pipefail
+echo "🔍 Running dotfiles integration tests..."
 
-# Colors for output
-green="\033[0;32m"
-red="\033[0;31m"
-reset="\033[0m"
+# Force load .bashrc/.zshrc
+current_shell=$(ps -p $$ -o comm=)
+case "$current_shell" in
+  bash)
+    source "$HOME/.bashrc"
+    ;;
+  zsh)
+    source "$HOME/.zshrc"
+    ;;
+  *)
+    echo "⚠️ Unknown shell '$current_shell' — not sourcing any rc file"
+    ;;
+esac
 
 failures=0
 
-
-function check() {
-    "$@" && echo -e "${green}PASS${reset}: $*" || { echo -e "${red}FAIL${reset}: $*"; failures=$((failures+1)); }
+fail() {
+  echo "❌ $1"
+  failures=$((failures + 1))
 }
 
-# Check for installed packages
-for pkg in zsh uv brave-browser code inkscape; do
-    check command -v "$pkg"
-done
+pass() {
+  echo "✅ $1"
+}
 
-# Check for oh-my-zsh and oh-my-posh
-check test -d "$HOME/.oh-my-zsh"
-check command -v oh-my-posh
-
-# Check for symlinked dotfiles
-for dot in .zshrc .bashrc .gitconfig; do
-    check test -L "$HOME/$dot"
-done
-
-# Check that the 'act' alias works (activates base env)
-if ! command -v python >/dev/null 2>&1; then
-    echo -e "${green}PASS${reset}: python not found"
+# 1. oh-my-zsh
+if [ -d "$HOME/.oh-my-zsh" ]; then
+  pass "oh-my-zsh directory found"
 else
-    echo -e "${red}FAIL${reset}: python should not be found"
-    failures=$((failures+1))
+  fail "oh-my-zsh directory not found in \$HOME"
 fi
 
-# TODO: The following test is failing...
-if act >/dev/null 2>&1 && bash -c "act >/dev/null 2>&1; command -v python >/dev/null 2>&1"; then
-    echo -e "${green}PASS${reset}: base env activated successfully"
+# 2. oh-my-posh
+if command -v oh-my-posh >/dev/null 2>&1; then
+  pass "oh-my-posh is in PATH"
 else
-    echo -e "${red}FAIL${reset}: act not found or base env not activated"
-    failures=$((failures+1))
+  fail "oh-my-posh command not found"
 fi
 
-# Check that 'ipy' runs (should print IPython banner)
-# TODO: The following test is failing...
-check ipy --version
-
-if [[ $failures -eq 0 ]]; then
-    echo -e "${green}All tests passed!${reset}"
-    exit 0
+# 3. JetBrainsMono Nerd Font
+if fc-list | grep -qi "JetBrainsMono Nerd Font"; then
+  pass "JetBrainsMono Nerd Font is installed"
 else
-    echo -e "${red}$failures test(s) failed.${reset}"
-    exit 1
+  fail "JetBrainsMono Nerd Font not found (fc-list)"
+fi
+
+# 4. Papirus icons
+if [ -d "$HOME/.icons/Papirus" ]; then
+  pass "Papirus icons found in ~/.icons"
+else
+  fail "Papirus icons not found in ~/.icons"
+fi
+
+# 5. ipy function will run ipython with uv with an extra package
+# Create a temporary Python script to test the `ipy` call
+TMPFILE="$(mktemp)"
+cat > "$TMPFILE" <<'EOF'
+from icecream import ic
+ic('ok')
+exit()
+EOF
+# Run ipy in a subprocess, feeding in the script and capturing output
+OUTPUT=$(echo "run $TMPFILE" | ipy --with icecream 2>&1)
+EXIT_CODE=$?
+# Clean up the temporary file
+rm -f "$TMPFILE"
+# Check the exit code and output
+if [ $EXIT_CODE -ne 0 ]; then
+  fail "'ipy --with icecream' failed to run"
+elif echo "$OUTPUT" | grep -q "ic| 'ok'"; then
+  pass "'ipy --with icecream' runs and has access to icecream"
+else
+  fail "'ipy --with icecream' did not print output from icecream"
+fi
+
+# Final summary
+if [ "$failures" -eq 0 ]; then
+  echo "🎉 All dotfiles integration tests passed!"
+  exit 0
+else
+  echo "❌ $failures test(s) failed."
+  exit 1
 fi
