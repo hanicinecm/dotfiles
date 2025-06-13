@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-dotfiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo into temporary workspace
+        uses: actions/checkout@v4
+        with:
+          path: temp-dotfiles
+
+      - name: 🏠 Move repo to ~/.dotfiles
+        run: |
+          mv temp-dotfiles "$HOME/.dotfiles"
+
+      - name: 🧹 Preprocess setup scripts
+        run: |
+          # Remove the apt upgrade to save time
+          # Skip the Ghostty and Nerd Fonts installation, as these fail on GH Actions
+          # Also skip setting the default shell, as it requires user interaction
+          sed -i '/apt upgrade/d' ~/.dotfiles/setup.sh
+          sed -i 's/INSTALL_GHOSTTY=1/INSTALL_GHOSTTY=0/' ~/.dotfiles/setup.sh
+          sed -i 's/INSTALL_FONT=1/INSTALL_FONT=0/' ~/.dotfiles/setup.sh
+          sed -i 's/CHANGE_DEFAULT_SHELL=1/CHANGE_DEFAULT_SHELL=0/' ~/.dotfiles/setup.sh
+
+          # Make the setup script and test scripts executable
+          chmod +x ~/.dotfiles/setup.sh
+          chmod +x ~/.dotfiles/test/test_setup.sh
+
+      - name: ⚙️ Run setup script (first run)
+        shell: bash
+        run: ~/.dotfiles/setup.sh
+
+      - name: ✅ Run test with bash
+        shell: bash
+        run: ~/.dotfiles/test/test_setup.sh
+
+      - name: ✅ Run test with zsh
+        run: zsh ~/.dotfiles/test/test_setup.sh
+
+      - name: 🔁 Re-run setup script for idempotence
+        shell: bash
+        run: ~/.dotfiles/setup.sh
+
+      - name: 🔁 Re-run test with bash
+        shell: bash
+        run: ~/.dotfiles/test/test_setup.sh
+
+      - name: 🔁 Re-run test with zsh
+        run: zsh ~/.dotfiles/test/test_setup.sh

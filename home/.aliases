@@ -1,0 +1,15 @@
+# Common aliases shared between .bashrc and .zshrc
+# This file will be sourced at the end of both .bashrc and .zshrc
+
+alias ls="ls -CF --color=auto"
+alias la="ls -A"
+alias ll="ls -l"
+alias lla="ll -A"
+
+alias grep="grep --color=auto"
+alias bat=batcat
+
+alias actbase="source ~/.venvs/base/.venv/bin/activate"
+ipy() {
+    uv run --project ~/.venvs/base "$@" ipython
+}

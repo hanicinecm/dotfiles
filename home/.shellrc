@@ -1,0 +1,17 @@
+# Common shell configuration shared between .bashrc and .zshrc
+# This file will be sourced at the beginning of both .bashrc and .zshrc
+
+# Add bin directories to PATH if they exist and are not already in PATH
+for dir in "$HOME/bin" "$HOME/.local/bin" "/usr/bin"; do
+    [[ -d "$dir" && ":$PATH:" != *":$dir:"* ]] && PATH="$dir:$PATH"
+done
+
+# Source user environment variables if available
+[[ -f "$HOME/.env" ]] && source "$HOME/.env"
+
+# History settings
+HISTSIZE=3000
+HISTFILESIZE=3000
+
+# Set the LESS variable
+export LESS='-FRX'
