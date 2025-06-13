@@ -1,9 +1,9 @@
 # This script installs all the essential packages, both from the official apt
 # repository and from elsewhere.
 
-INSTALL_GHOSTTY=0
-INSTALL_BRAVE=0
-INSTALL_CODE=0
+INSTALL_GHOSTTY=1
+INSTALL_BRAVE=1
+INSTALL_CODE=1
 
 
 # Install apt packages:

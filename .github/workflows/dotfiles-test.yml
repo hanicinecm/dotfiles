@@ -22,8 +22,13 @@ jobs:
 
       - name: 🧹 Preprocess setup scripts
         run: |
+          # Remove the apt upgrade to save time
+          # Skip the Ghostty and Nerd Fonts installation, as these fail on GH Actions
           sed -i '/apt upgrade/d' ~/.dotfiles/setup.sh
           sed -i 's/INSTALL_GHOSTTY=1/INSTALL_GHOSTTY=0/' ~/.dotfiles/scripts/01-packages.sh
+          sed -i 's/INSTALL_BRAVE=1/INSTALL_BRAVE=0/' ~/.dotfiles/scripts/01-packages.sh
+          sed -i 's/INSTALL_CODE=1/INSTALL_CODE=0/' ~/.dotfiles/scripts/01-packages.sh
+          sed -i 's/INSTALL_FONT=1/INSTALL_FONT=0/' ~/.dotfiles/scripts/03-shell-config.sh
           chmod +x ~/.dotfiles/setup.sh
 
       - name: ⚙️ Run setup script (first run)

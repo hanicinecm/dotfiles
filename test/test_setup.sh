@@ -40,21 +40,14 @@ else
   fail "oh-my-posh command not found"
 fi
 
-# 3. JetBrainsMono Nerd Font
-if fc-list | grep -qi "JetBrainsMono Nerd Font"; then
-  pass "JetBrainsMono Nerd Font is installed"
-else
-  fail "JetBrainsMono Nerd Font not found (fc-list)"
-fi
-
-# 4. Papirus icons
+# 3. Papirus icons
 if [ -d "$HOME/.icons/Papirus" ]; then
   pass "Papirus icons found in ~/.icons"
 else
   fail "Papirus icons not found in ~/.icons"
 fi
 
-# 5. ipy function will run ipython with uv with an extra package
+# 4. ipy function will run ipython with uv with an extra package
 # Create a temporary Python script to test the `ipy` call
 TMPFILE="$(mktemp)"
 cat > "$TMPFILE" <<'EOF'
