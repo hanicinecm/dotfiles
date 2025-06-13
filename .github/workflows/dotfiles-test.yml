@@ -20,9 +20,10 @@ jobs:
         run: |
           mv temp-dotfiles "$HOME/.dotfiles"
 
-      - name: 🧹 Preprocess setup.sh (remove apt upgrade)
+      - name: 🧹 Preprocess setup scripts
         run: |
           sed -i '/apt upgrade/d' ~/.dotfiles/setup.sh
+          sed -i 's/INSTALL_GHOSTTY=1/INSTALL_GHOSTTY=0/' ~/.dotfiles/scripts/01-packages.sh
           chmod +x ~/.dotfiles/setup.sh
 
       - name: ⚙️ Run setup script (first run)

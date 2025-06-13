@@ -1,6 +1,8 @@
 # This script installs all the essential packages, both from the official apt
 # repository and from elsewhere.
 
+INSTALL_GHOSTTY=1
+
 
 # Install apt packages:
 packages=(
@@ -24,12 +26,14 @@ fi
 
 
 # The ghostty terminal:
-if ! command -v ghostty &> /dev/null; then
-    echo "🔧 Installing ghostty terminal..."
-    curl -LsSf \
-        https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh | bash
-else
-    echo "ℹ️ ghostty is already installed."
+if [[ "${INSTALL_GHOSTTY}" == "1" ]]; then
+    if ! command -v ghostty &> /dev/null; then
+        echo "🔧 Installing ghostty terminal..."
+        curl -LsSf \
+            https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh | bash
+    else
+        echo "ℹ️ ghostty is already installed."
+    fi
 fi
 
 
