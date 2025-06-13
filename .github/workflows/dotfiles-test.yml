@@ -19,6 +19,10 @@ jobs:
       - name: 🏠 Move repo to ~/.dotfiles
         run: |
           mv temp-dotfiles "$HOME/.dotfiles"
+        
+      - name: 🐞 Debug shell (manual runs only)
+        if: github.event_name == 'workflow_dispatch'
+        uses: mxschmitt/action-tmate@v3
 
       - name: 🧹 Preprocess setup scripts
         run: |
