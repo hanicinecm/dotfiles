@@ -19,7 +19,6 @@ sudo apt install -y "${packages[@]}"
 if ! command -v uv &> /dev/null; then
     echo "🔧 Installing uv package manager..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
-    export PATH="$HOME/.local/bin:$PATH" # To ensure that uv is available for setup.sh
 else
     echo "ℹ️ uv is already installed."
 fi

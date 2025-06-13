@@ -21,6 +21,10 @@ sudo apt update
 sudo apt upgrade -y
 
 
+# Add some directories to the PATH, so we can directly use the installed tools
+export PATH="$HOME/.local/bin:$PATH"
+
+
 # Execute all the setup scripts one by one
 for script in "$SCRIPTS_DIR"/*.sh; do
 
