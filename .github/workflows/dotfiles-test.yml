@@ -27,8 +27,6 @@ jobs:
           # Also skip setting the default shell, as it requires user interaction
           sed -i '/apt upgrade/d' ~/.dotfiles/setup.sh
           sed -i 's/INSTALL_GHOSTTY=1/INSTALL_GHOSTTY=0/' ~/.dotfiles/setup.sh
-          sed -i 's/INSTALL_BRAVE=1/INSTALL_BRAVE=0/' ~/.dotfiles/setup.sh
-          sed -i 's/INSTALL_CODE=1/INSTALL_CODE=0/' ~/.dotfiles/setup.sh
           sed -i 's/INSTALL_FONT=1/INSTALL_FONT=0/' ~/.dotfiles/setup.sh
           sed -i 's/CHANGE_DEFAULT_SHELL=1/CHANGE_DEFAULT_SHELL=0/' ~/.dotfiles/setup.sh
 
@@ -45,8 +43,7 @@ jobs:
         run: ~/.dotfiles/test/test_setup.sh
 
       - name: ✅ Run test with zsh
-        shell: zsh
-        run: ~/.dotfiles/test/test_setup.sh
+        run: zsh ~/.dotfiles/test/test_setup.sh
 
       - name: 🔁 Re-run setup script for idempotence
         shell: bash
@@ -57,5 +54,4 @@ jobs:
         run: ~/.dotfiles/test/test_setup.sh
 
       - name: 🔁 Re-run test with zsh
-        shell: zsh
-        run: ~/.dotfiles/test/test_setup.sh
+        run: zsh ~/.dotfiles/test/test_setup.sh
