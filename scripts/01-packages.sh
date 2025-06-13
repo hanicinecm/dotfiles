@@ -1,7 +1,9 @@
 # This script installs all the essential packages, both from the official apt
 # repository and from elsewhere.
 
-INSTALL_GHOSTTY=1
+INSTALL_GHOSTTY=0
+INSTALL_BRAVE=0
+INSTALL_CODE=0
 
 
 # Install apt packages:
@@ -37,25 +39,29 @@ fi
 
 
 # The Brave browser:
-if ! command -v brave-browser &> /dev/null; then
-    echo "🔧 Installing Brave browser..."
-    curl -fsS https://dl.brave.com/install.sh | sh
-else
-    echo "ℹ️ Brave browser is already installed."
+if [[ "${INSTALL_BRAVE}" == "1" ]]; then
+    if ! command -v brave-browser &> /dev/null; then
+        echo "🔧 Installing Brave browser..."
+        curl -fsS https://dl.brave.com/install.sh | sh
+    else
+        echo "ℹ️ Brave browser is already installed."
+    fi
 fi
 
 
 # The VS Code editor:
-if ! command -v code &> /dev/null; then
-    sudo apt install wget gpg
-    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-    echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-    rm -f packages.microsoft.gpg
+if [[ "${INSTALL_CODE}" == "1" ]]; then
+    if ! command -v code &> /dev/null; then
+        sudo apt install wget gpg
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+        sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+        echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+        rm -f packages.microsoft.gpg
 
-    sudo apt install apt-transport-https
-    sudo apt update
-    sudo apt install code
-else
-    echo "ℹ️ Visual Studio Code is already installed."
+        sudo apt install apt-transport-https
+        sudo apt update
+        sudo apt install code
+    else
+        echo "ℹ️ Visual Studio Code is already installed."
+    fi
 fi

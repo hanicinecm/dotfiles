@@ -55,6 +55,7 @@ fi
 # Install JetBrains Mono Nerd Font if not already installed:
 if [ -z "$(fc-list | grep -i 'JetBrainsMono Nerd Font')" ]; then
     echo "🔧 Installing JetBrains Mono Nerd Font..."
+    oh-my-posh --help
     oh-my-posh font install JetBrainsMono
     echo "✅ JetBrains Mono Nerd Font installed."
 fi
