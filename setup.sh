@@ -4,6 +4,11 @@ set -euo pipefail
 
 # Define some global variables, accessible to all scripts sourced by this script
 DOTFILES_DIR="$HOME/.dotfiles"
+INSTALL_GHOSTTY=1
+INSTALL_BRAVE=1
+INSTALL_CODE=1
+INSTALL_FONT=1
+CHANGE_DEFAULT_SHELL=1
 
 
 # Check if scripts directory exists and has scripts
@@ -49,8 +54,8 @@ echo ""
 echo "🎉 The setup executed successfully."
 
 
-# Set the zsh as the default shell:
-if [ "$SHELL" != "$(which zsh)" ]; then
+# Set zsh as the default shell if requested and not already set
+if [ "$CHANGE_DEFAULT_SHELL" -eq 1 ] && [ "$SHELL" != "$(which zsh)" ]; then
     echo ""
     echo "ℹ️ Changing the default shell to zsh."
     chsh -s "$(which zsh)"

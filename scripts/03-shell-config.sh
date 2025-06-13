@@ -2,9 +2,6 @@
 # theme engine.
 # Both are already configured via the dotfiles symlinks.
 
-INSTALL_FONT=1
-
-
 # Check for dependencies:
 for cmd in git curl; do
     if ! command -v "$cmd" &>/dev/null; then
@@ -55,7 +52,7 @@ fi
 
 
 # Install JetBrains Mono Nerd Font if not already installed:
-if [[ "$INSTALL_FONT" == "1" ]]; then
+if [[ "$INSTALL_FONT" -eq 1 ]]; then
     if [ -z "$(fc-list | grep -i 'JetBrainsMono Nerd Font')" ]; then
         echo "🔧 Installing JetBrains Mono Nerd Font..."
         oh-my-posh font install JetBrainsMono

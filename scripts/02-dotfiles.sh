@@ -4,7 +4,6 @@
 # archived to a timestamped tarball inside `~/.archived_dotfiles` before creating the
 # symlinks.
 
-
 # Check for dependencies:
 if ! command -v stow >/dev/null 2>&1; then
     echo "❌ GNU Stow is not installed. Please install it before running this script."

@@ -1,11 +1,6 @@
 # This script installs all the essential packages, both from the official apt
 # repository and from elsewhere.
 
-INSTALL_GHOSTTY=1
-INSTALL_BRAVE=1
-INSTALL_CODE=1
-
-
 # Install apt packages:
 packages=(
     stow
@@ -27,7 +22,7 @@ fi
 
 
 # The ghostty terminal:
-if [[ "${INSTALL_GHOSTTY}" == "1" ]]; then
+if [[ "${INSTALL_GHOSTTY}" -eq 1 ]]; then
     if ! command -v ghostty &> /dev/null; then
         echo "🔧 Installing ghostty terminal..."
         curl -LsSf \
@@ -39,7 +34,7 @@ fi
 
 
 # The Brave browser:
-if [[ "${INSTALL_BRAVE}" == "1" ]]; then
+if [[ "${INSTALL_BRAVE}" -eq 1 ]]; then
     if ! command -v brave-browser &> /dev/null; then
         echo "🔧 Installing Brave browser..."
         curl -fsS https://dl.brave.com/install.sh | sh
@@ -50,7 +45,7 @@ fi
 
 
 # The VS Code editor:
-if [[ "${INSTALL_CODE}" == "1" ]]; then
+if [[ "${INSTALL_CODE}" -eq 1 ]]; then
     if ! command -v code &> /dev/null; then
         sudo apt install wget gpg
         wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
