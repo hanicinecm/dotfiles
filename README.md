@@ -1,5 +1,9 @@
 # System Configuration
 
+![OS](https://img.shields.io/badge/OS-Ubuntu-orange)
+![OS](https://img.shields.io/badge/OS-Linux%20Mint-blue)
+![CI](https://github.com/hanicinecm/dotfiles/actions/workflows/dotfiles-test.yml/badge.svg)
+
 This is my personal system configuration, valid for Linux Mint Cinnamon
 (or theoretically for any other Ubuntu-based distribution).
 
@@ -89,3 +93,14 @@ Two related aliases are sourced from the dotfiles:
   executes the `ipython`.
   As an example, `ipy --with pandas` will run IPython from the `base` environment
   with the additional `pandas` library installed temporarily, only for this call.
+
+### Testing
+
+The repository contains a simple integration test shell script, containing tests that
+some selected functionality indeed works after the setup script is executed.
+
+Additionally, a CI pipeline is impelemented as a GitHub Actions workflow, which
+
+- Runs the setup script on a fresh latest Ubuntu machine.
+- Checks if the integration test passes.
+- Tests for idempotence.
