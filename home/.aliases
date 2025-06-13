@@ -9,7 +9,7 @@ alias lla="ll -A"
 alias grep="grep --color=auto"
 alias bat=batcat
 
-alias act="source ~/.venvs/base/.venv/bin/activate"
+alias actbase="source ~/.venvs/base/.venv/bin/activate"
 ipy() {
     uv run --project ~/.venvs/base "$@" ipython
 }

@@ -5,7 +5,6 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  workflow_dispatch:
 
 jobs:
   test-dotfiles:
@@ -26,10 +25,6 @@ jobs:
           sed -i '/apt upgrade/d' ~/.dotfiles/setup.sh
           sed -i 's/INSTALL_GHOSTTY=1/INSTALL_GHOSTTY=0/' ~/.dotfiles/scripts/01-packages.sh
           chmod +x ~/.dotfiles/setup.sh
-        
-      - name: 🐞 Debug shell (manual runs only)
-        if: github.event_name == 'workflow_dispatch'
-        uses: mxschmitt/action-tmate@v3
 
       - name: ⚙️ Run setup script (first run)
         shell: bash
