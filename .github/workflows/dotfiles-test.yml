@@ -31,7 +31,10 @@ jobs:
           sed -i 's/INSTALL_CODE=1/INSTALL_CODE=0/' ~/.dotfiles/setup.sh
           sed -i 's/INSTALL_FONT=1/INSTALL_FONT=0/' ~/.dotfiles/setup.sh
           sed -i 's/CHANGE_DEFAULT_SHELL=1/CHANGE_DEFAULT_SHELL=0/' ~/.dotfiles/setup.sh
+
+          # Make the setup script and test scripts executable
           chmod +x ~/.dotfiles/setup.sh
+          chmod +x ~/.dotfiles/test/test_setup.sh
 
       - name: ⚙️ Run setup script (first run)
         shell: bash
